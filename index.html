@@ -95,29 +95,15 @@
                                 <path d="M4 8H12M12 8L8 4M12 8L8 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </a>
-                        <p class="hero-early-bird">
-                            <span class="hero-early-bird-dot" aria-hidden="true"></span>
-                            <span>Ранняя цена&nbsp;— до&nbsp;25&nbsp;мая</span>
-                        </p>
                     </div>
                 </div>
 
                 <div class="hero-visual" aria-hidden="true">
                     <div class="hero-visual-frame">
-                        <div class="hero-visual-content">
-                            <svg class="hero-visual-ornament" width="48" height="68" viewBox="0 0 48 68" fill="none">
-                                <ellipse cx="24" cy="22" rx="16" ry="20" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                                <line x1="24" y1="44" x2="24" y2="62" stroke="currentColor" stroke-width="0.8"/>
-                            </svg>
-                            <p class="hero-visual-label">
-                                фото:<br>
-                                <em>руки мастера<br>с тонкими ногтями</em>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="hero-visual-tag">
-                        <span class="hero-visual-tag-dot"></span>
-                        <span>placeholder</span>
+                        <picture>
+                            <source srcset="img/hero-hands.webp" type="image/webp">
+                            <img src="img/hero-hands.jpg" alt="Тонкое натуральное укрепление — работа Марии Ехаловой" width="1000" height="1333" loading="eager" fetchpriority="high">
+                        </picture>
                     </div>
                 </div>
 
@@ -461,10 +447,6 @@
                             <path d="M4 8H12M12 8L8 4M12 8L8 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </a>
-                    <p class="outcomes-cta-note">
-                        <span class="outcomes-cta-dot" aria-hidden="true"></span>
-                        Ранняя цена действует до&nbsp;25&nbsp;мая
-                    </p>
                 </div>
 
             </div>
@@ -827,10 +809,6 @@
                             <path d="M4 8H12M12 8L8 4M12 8L8 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </a>
-                    <p class="program-cta-note">
-                        <span class="program-cta-dot" aria-hidden="true"></span>
-                        Ранняя цена действует до&nbsp;25&nbsp;мая
-                    </p>
                 </div>
 
             </div>
@@ -967,36 +945,6 @@
                     </h2>
                 </header>
 
-                <!-- ===== ТАЙМЕР ===== -->
-                <div class="countdown fade-up" id="countdown" aria-hidden="true">
-                    <p class="countdown-label">
-                        <span class="countdown-pulse" aria-hidden="true"></span>
-                        До&nbsp;повышения цены
-                    </p>
-                    <div class="countdown-clock" data-target="2026-05-25T23:59:00+01:00">
-                        <div class="countdown-unit">
-                            <span class="countdown-num" data-unit="days">00</span>
-                            <span class="countdown-label-unit">дн.</span>
-                        </div>
-                        <span class="countdown-colon" aria-hidden="true">:</span>
-                        <div class="countdown-unit">
-                            <span class="countdown-num" data-unit="hours">00</span>
-                            <span class="countdown-label-unit">час</span>
-                        </div>
-                        <span class="countdown-colon" aria-hidden="true">:</span>
-                        <div class="countdown-unit">
-                            <span class="countdown-num" data-unit="minutes">00</span>
-                            <span class="countdown-label-unit">мин</span>
-                        </div>
-                        <span class="countdown-colon" aria-hidden="true">:</span>
-                        <div class="countdown-unit">
-                            <span class="countdown-num" data-unit="seconds">00</span>
-                            <span class="countdown-label-unit">сек</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="visually-hidden" id="countdown-sr">Ранняя цена действует до 25 мая 2026 года, 23:59 по&nbsp;Лиссабону.</p>
-
                 <!-- ===== ТАРИФЫ ===== -->
                 <div class="tiers">
 
@@ -1008,12 +956,10 @@
                         </header>
 
                         <div class="tier-price">
-                            <span class="tier-price-old">69&nbsp;€</span>
                             <span class="tier-price-new">
                                 <span class="tier-price-num">49</span>
                                 <span class="tier-price-currency">€</span>
                             </span>
-                            <span class="tier-price-note">Ранняя цена</span>
                         </div>
 
                         <ul class="tier-features">
@@ -1050,12 +996,10 @@
                         </header>
 
                         <div class="tier-price">
-                            <span class="tier-price-old">109&nbsp;€</span>
                             <span class="tier-price-new">
                                 <span class="tier-price-num">79</span>
                                 <span class="tier-price-currency">€</span>
                             </span>
-                            <span class="tier-price-note">Ранняя цена</span>
                         </div>
 
                         <ul class="tier-features">
@@ -1087,12 +1031,10 @@
                         </header>
 
                         <div class="tier-price">
-                            <span class="tier-price-old">169&nbsp;€</span>
                             <span class="tier-price-new">
                                 <span class="tier-price-num">119</span>
                                 <span class="tier-price-currency">€</span>
                             </span>
-                            <span class="tier-price-note">Ранняя цена</span>
                         </div>
 
                         <ul class="tier-features">
@@ -1137,10 +1079,10 @@
                     <div class="pricing-reassure-divider" aria-hidden="true"></div>
                     <div class="pricing-reassure-item">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.2"/>
-                            <path d="M10 6V10L13 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                            <path d="M4 3H16V13L10 17L4 13V3Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+                            <path d="M7 9L9.5 11.5L13.5 7.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>Ранняя цена&nbsp;— до&nbsp;25&nbsp;мая</span>
+                        <span>Сертификат после прохождения</span>
                     </div>
                 </div>
 
@@ -1337,7 +1279,7 @@
                     </h2>
 
                     <p class="final-cta-subtitle">
-                        До&nbsp;25&nbsp;мая действует ранняя цена. Дальше — стоимость повышается на&nbsp;всех тарифах.
+                        Доступ к&nbsp;курсу&nbsp;— сразу после оплаты, в&nbsp;закрытом Telegram-канале с&nbsp;поддержкой Марии.
                     </p>
 
                     <div class="final-cta-actions">
@@ -1383,6 +1325,53 @@
             </p>
         </div>
     </footer>
+
+    <!-- ============ DEMO MODAL ============ -->
+    <!-- Показывается, если бэкенд недоступен (GitHub Pages, статичный хостинг и т.п.).
+         Подменяет alert о неработающей оплате на красивое объяснение демо-режима. -->
+    <div class="demo-modal" id="demo-modal" hidden role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
+        <div class="demo-modal-backdrop" data-close></div>
+        <div class="demo-modal-card">
+            <button class="demo-modal-close" aria-label="Закрыть" data-close>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </button>
+
+            <div class="demo-modal-mark" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.4"/>
+                    <path d="M11 7V12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    <circle cx="11" cy="15" r="0.8" fill="currentColor"/>
+                </svg>
+            </div>
+
+            <p class="demo-modal-overline">Демо-версия</p>
+
+            <h2 class="demo-modal-title" id="demo-modal-title">
+                Это <em>превью</em> сайта
+            </h2>
+
+            <p class="demo-modal-text">
+                Сайт сейчас опубликован в&nbsp;демо-режиме для показа дизайна. Реальная оплата подключится, когда лендинг будет развёрнут на&nbsp;продакшен-хостинге.
+            </p>
+            <p class="demo-modal-text">
+                Хотите попасть на&nbsp;курс уже сейчас? Напишите <em>Марии</em> в&nbsp;Telegram&nbsp;— она пришлёт ссылку на&nbsp;оплату напрямую.
+            </p>
+
+            <div class="demo-modal-actions">
+                <!-- TODO: заменить на реальный TG Марии, когда пришлёт -->
+                <a href="https://t.me/" target="_blank" rel="noopener" class="btn btn--primary btn--large">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M14.5 2L1.5 7L6 8.5M14.5 2L12 14L6 8.5M14.5 2L6 8.5M6 8.5V12L8.5 10" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>
+                    </svg>
+                    <span>Написать в Telegram</span>
+                </a>
+                <button class="btn btn--outline" data-close>Понятно</button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- ============ COOKIE BANNER ============ -->
     <!-- Появляется при первом визите. Сохранение согласия в localStorage.

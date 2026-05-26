@@ -375,8 +375,7 @@ a { color: inherit; text-decoration: none; }
 .hero-visual-frame {
   position: relative;
   aspect-ratio: 3 / 4;
-  background:
-    linear-gradient(155deg, var(--c-accent-bg) 0%, var(--c-bg-soft) 65%, var(--c-bg) 100%);
+  background: var(--c-bg-soft);
   border: 1px solid var(--c-line);
   border-radius: 6px;
   overflow: hidden;
@@ -385,70 +384,11 @@ a { color: inherit; text-decoration: none; }
     0 30px 60px -30px rgba(31,24,20,0.18);
 }
 
-/* лёгкая «зернистость» как у плёночной фотографии */
-.hero-visual-frame::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    repeating-linear-gradient(0deg, transparent 0 2px, rgba(31,24,20,0.012) 2px 3px);
-  pointer-events: none;
-}
-
-.hero-visual-content {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.6rem;
-  padding: 2rem;
-}
-
-.hero-visual-ornament {
-  color: var(--c-accent);
-  opacity: 0.65;
-}
-
-.hero-visual-label {
-  font-family: var(--font-display);
-  font-size: 0.92rem;
-  text-align: center;
-  color: var(--c-ink-muted);
-  line-height: 1.5;
-  letter-spacing: 0.01em;
-  text-transform: lowercase;
-}
-.hero-visual-label em {
-  font-style: italic;
-  font-weight: 400;
-  color: var(--c-ink-soft);
-}
-
-.hero-visual-tag {
-  position: absolute;
-  top: -14px;
-  right: -14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.45rem 0.85rem;
-  background: var(--c-bg);
-  border: 1px solid var(--c-line-strong);
-  border-radius: 999px;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--c-ink-muted);
-  font-weight: 600;
-}
-
-.hero-visual-tag-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--c-accent);
+.hero-visual-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 
@@ -2506,6 +2446,132 @@ a { color: inherit; text-decoration: none; }
   transition: color var(--dur-fast) var(--ease-out);
 }
 .pricing-consent a:hover { color: var(--c-ink); }
+
+
+/* ============ DEMO MODAL ============ */
+.demo-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.demo-modal.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.demo-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(31, 24, 20, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.demo-modal-card {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;
+  width: 100%;
+  padding: clamp(2rem, 4vw, 2.75rem);
+  background: var(--c-bg);
+  border-radius: 12px;
+  box-shadow: 0 30px 80px -20px rgba(31, 24, 20, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  transform: translateY(20px) scale(0.96);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.demo-modal.is-visible .demo-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.demo-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--c-bg-soft);
+  color: var(--c-ink-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.demo-modal-close:hover {
+  background: var(--c-accent-bg);
+  color: var(--c-accent);
+}
+
+.demo-modal-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--c-accent-bg);
+  color: var(--c-accent);
+  margin-bottom: 0.25rem;
+}
+
+.demo-modal-overline {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-ink-muted);
+  font-weight: 600;
+}
+
+.demo-modal-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  line-height: 1.1;
+  color: var(--c-ink);
+  letter-spacing: -0.018em;
+  font-variation-settings: "opsz" 144;
+}
+
+.demo-modal-title em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--c-accent);
+}
+
+.demo-modal-text {
+  font-size: clamp(0.95rem, 1.05vw, 1rem);
+  line-height: 1.6;
+  color: var(--c-ink-soft);
+}
+
+.demo-modal-text em {
+  font-style: italic;
+  color: var(--c-accent);
+  font-weight: 500;
+}
+
+.demo-modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.demo-modal-actions .btn { flex: 1; min-width: 0; }
 
 
 /* ============ SCROLL FADE-UP (универсально) ============ */

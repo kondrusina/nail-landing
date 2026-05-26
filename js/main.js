@@ -77,59 +77,44 @@
   }
 
 
-  // ---- Countdown timer до повышения цены
-  // Цель: 25 мая 2026, 23:59 по лиссабонскому летнему времени (+01:00 WEST).
-  // Дата вшита в data-target атрибут .countdown-clock — при изменении даты
-  // правим только HTML, JS трогать не надо.
-  const clock = document.querySelector('.countdown-clock');
+  // ---- Demo modal — показывается, когда бэкенда нет (статичный хостинг, GH Pages).
+  // Подменяет alert о неработающей оплате на красивое UX-объяснение.
+  const demoModal = document.getElementById('demo-modal');
 
-  if (clock) {
-    const targetISO = clock.getAttribute('data-target');
-    const targetMs = new Date(targetISO).getTime();
+  const showDemoModal = () => {
+    if (!demoModal) return;
+    demoModal.hidden = false;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => demoModal.classList.add('is-visible'));
+    });
+    document.body.style.overflow = 'hidden';
+  };
 
-    const nums = {
-      days:    clock.querySelector('[data-unit="days"]'),
-      hours:   clock.querySelector('[data-unit="hours"]'),
-      minutes: clock.querySelector('[data-unit="minutes"]'),
-      seconds: clock.querySelector('[data-unit="seconds"]'),
-    };
+  const hideDemoModal = () => {
+    if (!demoModal) return;
+    demoModal.classList.remove('is-visible');
+    document.body.style.overflow = '';
+    setTimeout(() => { demoModal.hidden = true; }, 360);
+  };
 
-    const pad = (n) => String(n).padStart(2, '0');
-
-    const tick = () => {
-      const diff = targetMs - Date.now();
-
-      if (diff <= 0) {
-        // Время вышло — обнуляем и помечаем контейнер для возможной стилизации
-        nums.days.textContent = '00';
-        nums.hours.textContent = '00';
-        nums.minutes.textContent = '00';
-        nums.seconds.textContent = '00';
-        clock.classList.add('countdown-clock--expired');
-        clearInterval(interval);
-        return;
+  if (demoModal) {
+    // Закрытие: backdrop, крестик, кнопка "Понятно"
+    demoModal.querySelectorAll('[data-close]').forEach(el => {
+      el.addEventListener('click', hideDemoModal);
+    });
+    // Esc
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && demoModal.classList.contains('is-visible')) {
+        hideDemoModal();
       }
-
-      const days    = Math.floor(diff / 86400000);
-      const hours   = Math.floor((diff % 86400000) / 3600000);
-      const minutes = Math.floor((diff % 3600000)  / 60000);
-      const seconds = Math.floor((diff % 60000)    / 1000);
-
-      nums.days.textContent    = pad(days);
-      nums.hours.textContent   = pad(hours);
-      nums.minutes.textContent = pad(minutes);
-      nums.seconds.textContent = pad(seconds);
-    };
-
-    tick();
-    const interval = setInterval(tick, 1000);
+    });
   }
 
 
   // ---- Кнопки выбора тарифа
   // Каждая кнопка несёт data-tier="basic|standard|vip".
-  // POST на /api/checkout.php → получаем URL → редирект на Stripe Checkout
-  // (или на thank-you в mock-режиме).
+  // POST на /api/checkout.php → получаем URL → редирект на Stripe Checkout.
+  // На статичных хостингах (GH Pages) бэка нет — показываем демо-модалку.
   const tierButtons = document.querySelectorAll('.tier-cta');
 
   tierButtons.forEach(btn => {
@@ -138,11 +123,16 @@
       const tier = btn.dataset.tier;
       if (!tier) return;
 
-      // Защита от двойных кликов
       if (btn.classList.contains('is-loading')) return;
       btn.classList.add('is-loading');
-      const originalText = btn.querySelector('span').textContent;
-      btn.querySelector('span').textContent = 'Открываем оплату…';
+      const labelEl = btn.querySelector('span');
+      const originalText = labelEl ? labelEl.textContent : '';
+      if (labelEl) labelEl.textContent = 'Открываем оплату…';
+
+      const restore = () => {
+        btn.classList.remove('is-loading');
+        if (labelEl) labelEl.textContent = originalText;
+      };
 
       try {
         const response = await fetch('/api/checkout.php', {
@@ -151,24 +141,36 @@
           body: JSON.stringify({ tier }),
         });
 
+        // Нет бэка — статичный хостинг отдаст 404 или сам PHP-файл
         if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          throw new Error(errorData.message || errorData.error || `HTTP ${response.status}`);
+          restore();
+          showDemoModal();
+          return;
         }
 
-        const data = await response.json();
+        // Может прийти не-JSON (PHP-исходник или HTML)
+        let data;
+        try {
+          data = await response.json();
+        } catch (parseErr) {
+          restore();
+          showDemoModal();
+          return;
+        }
+
         if (!data.url) {
-          throw new Error('No checkout URL returned');
+          restore();
+          showDemoModal();
+          return;
         }
 
-        // Редирект на Stripe Checkout (или thank-you в mock-режиме)
+        // Реальный кейс: редирект на Stripe Checkout или thank-you (mock)
         window.location.href = data.url;
 
       } catch (err) {
-        console.error('[checkout] failed:', err);
-        btn.classList.remove('is-loading');
-        btn.querySelector('span').textContent = originalText;
-        alert('Не удалось открыть оплату. Попробуйте ещё раз или напишите нам в Telegram.');
+        console.warn('[checkout] failed, showing demo modal:', err);
+        restore();
+        showDemoModal();
       }
     });
   });
