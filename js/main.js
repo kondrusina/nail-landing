@@ -34,7 +34,6 @@
       const expanded = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', String(!expanded));
       siteNav.classList.toggle('is-open', !expanded);
-      document.body.style.overflow = expanded ? '' : 'hidden';
       toggle.setAttribute('aria-label', expanded ? 'Открыть меню' : 'Закрыть меню');
     });
     // Закрываем меню при клике на ссылку
@@ -42,7 +41,6 @@
       link.addEventListener('click', () => {
         toggle.setAttribute('aria-expanded', 'false');
         siteNav.classList.remove('is-open');
-        document.body.style.overflow = '';
         toggle.setAttribute('aria-label', 'Открыть меню');
       });
     });
