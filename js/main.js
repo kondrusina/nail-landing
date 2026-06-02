@@ -26,13 +26,25 @@
   }
 
 
-  // ---- Mobile nav toggle (заглушка, меню сделаем при адаптиве)
+  // ---- Mobile nav toggle
   const toggle = document.querySelector('.nav-toggle');
-  if (toggle) {
+  const siteNav = document.querySelector('.site-nav');
+  if (toggle && siteNav) {
     toggle.addEventListener('click', () => {
       const expanded = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', String(!expanded));
-      // TODO: открывать мобильное меню (сделаем при добавлении остальных секций)
+      siteNav.classList.toggle('is-open', !expanded);
+      document.body.style.overflow = expanded ? '' : 'hidden';
+      toggle.setAttribute('aria-label', expanded ? 'Открыть меню' : 'Закрыть меню');
+    });
+    // Закрываем меню при клике на ссылку
+    siteNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        siteNav.classList.remove('is-open');
+        document.body.style.overflow = '';
+        toggle.setAttribute('aria-label', 'Открыть меню');
+      });
     });
   }
 
@@ -110,70 +122,6 @@
     });
   }
 
-
-  // ---- Кнопки выбора тарифа
-  // Каждая кнопка несёт data-tier="basic|standard|vip".
-  // POST на /api/checkout.php → получаем URL → редирект на Stripe Checkout.
-  // На статичных хостингах (GH Pages) бэка нет — показываем демо-модалку.
-  const tierButtons = document.querySelectorAll('.tier-cta');
-
-  tierButtons.forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      const tier = btn.dataset.tier;
-      if (!tier) return;
-
-      if (btn.classList.contains('is-loading')) return;
-      btn.classList.add('is-loading');
-      const labelEl = btn.querySelector('span');
-      const originalText = labelEl ? labelEl.textContent : '';
-      if (labelEl) labelEl.textContent = 'Открываем оплату…';
-
-      const restore = () => {
-        btn.classList.remove('is-loading');
-        if (labelEl) labelEl.textContent = originalText;
-      };
-
-      try {
-        const response = await fetch('/api/checkout.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ tier }),
-        });
-
-        // Нет бэка — статичный хостинг отдаст 404 или сам PHP-файл
-        if (!response.ok) {
-          restore();
-          showDemoModal();
-          return;
-        }
-
-        // Может прийти не-JSON (PHP-исходник или HTML)
-        let data;
-        try {
-          data = await response.json();
-        } catch (parseErr) {
-          restore();
-          showDemoModal();
-          return;
-        }
-
-        if (!data.url) {
-          restore();
-          showDemoModal();
-          return;
-        }
-
-        // Реальный кейс: редирект на Stripe Checkout или thank-you (mock)
-        window.location.href = data.url;
-
-      } catch (err) {
-        console.warn('[checkout] failed, showing demo modal:', err);
-        restore();
-        showDemoModal();
-      }
-    });
-  });
 
 
   // ---- FAQ-аккордеон
